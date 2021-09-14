@@ -1,0 +1,159 @@
+.group {
+  display: inline-block;
+}
+
+.date-container {
+  position: relative;
+  overflow: hidden;
+  margin-left: -13px;
+}
+
+.date {
+  font-size: small;
+  font-weight: bold;
+  margin: 5px 5px 2px 16px;
+}
+
+.location {
+  font-size: 10px;
+  font-weight: 500;
+  margin-left: 15px;
+  margin-top: 3px;
+  position: absolute;
+  z-index: 10;
+  color: #bfbfbf;
+  padding: 0 3px;
+  background: #0000008f;
+  border-radius: 2px;
+  max-width: calc(100% - 30px);
+}
+
+//https://w3reign.com/responsive-justified-photo-grid-gallery-with-pure-css/
+.gallery {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  //margin: -2.5px; TODO: WHAT IS THIS FOR?
+  //margin-left: 10px !important; TODO: WHAT IS THIS FOR?
+}
+
+.gallery:after {
+  content: '';
+  flex-grow: 999999999;
+  /*min-width: 200px;*/
+  height: 0;
+}
+
+.gallery.group{
+  margin-left: 12px;
+}
+
+.debug {
+  position: absolute !important;
+  right: 0;
+  z-index: 1;
+}
+
+.gallery > * {
+  position: relative;
+  display: block;
+  height: 200px;
+  margin: 2.5px;
+}
+
+.gallery > *{ //:not(.vid){
+  flex-grow: 1;
+}
+
+.gallery > .loading-img,
+.gallery > .load-error-img{
+  display: flex;
+  height: 200px;
+  width: 100px;
+  border-radius: 2px;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery > .loading-img{
+  background-color: #e1e1e1;
+  animation-duration: 600ms;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.gallery > .load-error-img{
+  border: 2px dotted #d2d2d2;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+  text-align: center;
+  font-size: small;
+  opacity: 0.7;
+  word-break: break-all;
+}
+
+@keyframes blink {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+.gallery > * > img,.gallery > * > video{
+  height: 200px;
+  object-fit: cover;
+  max-width: 100%;
+  min-width: 100%;
+  vertical-align: bottom;
+  border-radius: 2px;
+}
+
+.no-photos, .error, .loading {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  min-height: 100px;
+  align-items: center;
+  //background: #fafafa;
+  //border: 1px dotted #bebebe;
+  //border-radius: 3px;
+  padding: 25px;
+}
+
+.no-photos, .error{
+  opacity: 0.3;
+}
+
+.no-photos .msg, .error .msg, .loading .msg {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.gallery a.vid .vid-hover{
+  display: flex;
+  content: " ";
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: absolute;
+  opacity: 0.3;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery a.vid:hover .vid-hover{
+  display: none;
+}
+
+.gallery a.vid mdb-icon{
+  font-size: 100px;
+}

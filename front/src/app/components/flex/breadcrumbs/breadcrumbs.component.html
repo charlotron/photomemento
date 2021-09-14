@@ -1,0 +1,17 @@
+<mdb-breadcrumb *ngIf="!this.sectionsServiceService.isHome()">
+  <ng-container *ngFor="let breadcrumb of this.breadCrumbsDataServiceService.breadcrumbs">
+    <mdb-breadcrumb-item>
+      <ng-template #breadcrumbText>
+        <em *ngIf="breadcrumb.icon" class="fas fa-{{breadcrumb.icon}}"></em>
+        <ng-container *ngIf="breadcrumb.text">{{breadcrumb.text}}</ng-container>
+      </ng-template>
+
+      <a class="breadcrumb-link" [routerLink] ="breadcrumb?.path" [queryParams]="breadcrumb?.queryParams" *ngIf="breadcrumb.path">
+        <ng-container *ngTemplateOutlet="breadcrumbText"></ng-container>
+      </a>
+      <span class="breadcrumb-nolink" *ngIf="!breadcrumb.path">
+        <ng-container *ngTemplateOutlet="breadcrumbText"></ng-container>
+      </span>
+    </mdb-breadcrumb-item>
+  </ng-container>
+</mdb-breadcrumb>

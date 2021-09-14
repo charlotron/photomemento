@@ -1,0 +1,77 @@
+<!--<button type="button" mdbBtn color="primary" class="waves-light" data-toggle="modal" data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>Launch Modal</button>-->
+
+<div class="preview-container fill-max-width-height {{gallerySvc.activeMedia.type}}"
+     *ngIf="gallerySvc.activeMedia"
+     (swiperight)="prevPhoto()"
+     (swipeleft)="nextPhoto()">
+
+  <div class="preview-nav">
+    <!-- GO BACK BUTTON -->
+    <a class="goBackButton" (click)="onGoBackArrowClicked()" title="Close preview and go back">
+      <mdb-icon fas icon="arrow-left"></mdb-icon>
+    </a>
+    <!-- FILENAME -->
+    <span class="fill media-name">{{gallerySvc.activeMedia.name}} <span *ngIf="hasPreviewSrcSet()">(original)</span></span>
+    <!-- CHANGE QUALITY -->
+    <a class="changeQualityButton" *ngIf="gallerySvc.activeMedia.type=='PHOTO'" (click)="changeQuality()" title="Alternate preview/original photo" [ngClass]="{'active':hasPreviewSrcSet()}">
+      <mdb-icon fas icon="file-image"></mdb-icon>
+    </a>
+    <!-- SLIDESHOW BUTTON -->
+    <a class="previewButton" *ngIf="gallerySvc.activeMedia.next" (click)="slideshowModeStart()" title="Start gallery slideshow">
+      <mdb-icon fas icon="play-circle"></mdb-icon>
+    </a>
+    <!-- DOWNLOAD BUTTON -->
+    <a class="downloadButton" [href]="this.imageProvSvc.getDownloadUrl(gallerySvc.activeMedia)+'?download=true'" target="download" title="Download original image (Original quality)">
+      <mdb-icon fas icon="cloud-download-alt"></mdb-icon>
+    </a>
+  </div>
+
+  <div>
+    <!-- GO NEXT PHOTO BUTTON -->
+    <a *ngIf="gallerySvc.activeMedia.prev" [title]="gallerySvc.activeMedia.prev.name" class="lat-nav prev"
+       (click)="prevPhoto()"><em class="fas fa-angle-left"></em></a>
+
+    <!-- GO PREV PHOTO BUTTON -->
+    <a *ngIf="gallerySvc.activeMedia.next" [title]="gallerySvc.activeMedia.next.name" class="lat-nav next"
+       (click)="nextPhoto()"><em class="fas fa-angle-right"></em></a>
+
+    <!-- IMAGE -->
+    <div class="img">
+      <img
+        #image
+        [ngClass]="{'d-none':!gallerySvc.activeMedia.loaded || gallerySvc.activeMedia?.media?.vo}"
+        [src]="getImage()"
+        [title]="gallerySvc.activeMedia?.name"
+        [alt]="gallerySvc.activeMedia?.name"
+        [height]="mediaHeight"
+        [width]="mediaWidth"
+      />
+    </div>
+
+    <!-- VIDEO -->
+    <div class="vid" *ngIf="gallerySvc.activeMedia?.media?.vo">
+      <video
+        #video
+        [poster]="imageProvSvc.getCachedMediaUrl(gallerySvc.activeMedia?.media?.n)"
+        [src]="imageProvSvc.getCachedMediaUrl(gallerySvc.activeMedia?.media?.vn)"
+        [height]="mediaHeight"
+        [width]="mediaWidth"
+        autoplay
+        controls
+      >
+      </video>
+    </div>
+
+    <!-- SLIDESHOW CONTROLS -->
+    <div class="slideshow" *ngIf="slideshowMode">
+      <!-- SLIDESHOW PLAY BUTTON -->
+      <a (click)="slideshowPlay()" *ngIf="isSlideshowPaused()"><em class="fas fa-play-circle"></em></a>
+      <!-- SLIDESHOW PAUSE BUTTON -->
+      <a (click)="slideshowPause()" *ngIf="slideshowMode && !isSlideshowPaused()"><em class="fas fa-pause-circle"></em></a>
+      <!-- SLIDESHOW COUNTDOWN -->
+      <a class="countdown" *ngIf="slideshowCountDown">{{slideshowCountDown}}</a>
+      <!-- SLIDESHOW STOP BUTTON -->
+      <a (click)="slideshowModeStop()"><em class="fas fa-stop-circle"></em></a>
+    </div>
+  </div>
+</div>

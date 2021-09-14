@@ -1,0 +1,96 @@
+<!-- *ngIf="this.gallerySvc.activeMedia"-->
+
+
+<!-- gallery: credits: https://w3reign.com/responsive-justified-photo-grid-gallery-with-pure-css/ -->
+<ng-container *ngFor="let dateGroup of this.gallerySvc.media">
+  <ng-container *ngFor="let locGroup of dateGroup.contents;let i = index">
+    <div class="date-container group">
+      <div class="date" *ngIf="i==0">{{dateGroup.key | date:'EEE, dd MMM'}}
+        <ng-container *ngIf="!isCurrentYear(dateGroup.key)">{{dateGroup.key | date:'YYYY'}}</ng-container>
+      </div>
+
+      <span class="location"
+            *ngIf="locGroup.key!=constants.OTHER || dateGroup.contents.length!=1">{{locGroup.key}}</span>
+
+      <div class="gallery group">
+        <ng-container *ngFor="let media of locGroup.contents">
+
+
+          <!-- VIDEO -->
+          <a class="vid" *ngIf="media?.media?.vm" (click)="onMediaClicked(media)" (mouseenter)="video.muted=true;video.autoplay=true;video.play()" (mouseout)="video.pause()" [title]="media?.name+' ('+media?.id+')'">
+            <div class="debug"><a [href]="this.imgProviderService.getApiUrl(media?.id)" target="debug"><em class="fas fa-bug"></em></a></div>
+            <div class="vid-hover"><mdb-icon far icon="play-circle"></mdb-icon></div>
+            <video
+              #video
+              loop
+              preload="none"
+
+              [poster]="media.loaded?imgProviderService.getCachedMediaUrl(media?.media?.m):''"
+              [src]="imgProviderService.getCachedMediaUrl(media?.media?.vm)">
+            </video><!--[height]="200"
+              [width]="getScaledWidth(media,200)"-->
+          </a>
+
+          <!-- IMAGE -->
+          <a class="img" (click)="onMediaClicked(media)" [ngClass]="{'d-none':!media.loaded || media?.media?.vm}" [title]="media?.name+' ('+media?.id+')'">
+            <div class="debug"><a [href]="this.imgProviderService.getApiUrl(media?.id)" target="debug"><em class="fas fa-bug"></em></a></div>
+            <img
+              [src]="imgProviderService.getCachedMediaUrl(media?.media?.m)"
+              [title]="media?.name"
+              [alt]="media?.name"
+              onLoaded
+              (loaded)="media.loaded=true"
+              (loadComplete)="media.loadComplete=true"
+              (loadError)="media.loadError=true"
+            />
+          </a>
+
+          <!-- LOADING IMAGE DIV -->
+          <div class="loading-img" [ngClass]="{'d-none':!media.loadedComplete}" [title]="media?.name+' ('+media?.id+')'">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <!-- ERROR IMAGE DIV -->
+          <div class="load-error-img" [ngClass]="{'d-none':!media.loadError}" [title]="media?.name+' ('+media?.id+')'">
+            <div class="debug"><a [href]="this.imgProviderService.getApiUrl(media?.id)" target="debug"><em class="fas fa-bug"></em></a></div>
+            <mdb-icon fas icon="exclamation-triangle"></mdb-icon>
+            <div>No preview</div>
+            <div><small>{{media?.name}}</small></div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<div class="no-photos"
+     *ngIf="!gallerySvc.spinnerStatus.waitingEvents && !gallerySvc.isError && gallerySvc.checkedForMedia &&!hasMedia()">
+  <span>😜 Still no media here 😜</span>
+</div>
+
+<div class="loading" *ngIf="gallerySvc.spinnerStatus.waitingEvents">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading... </span>
+  </div>
+</div>
+<div class="error" *ngIf="!gallerySvc.spinnerStatus.waitingEvents && gallerySvc.isError">
+  <div class="msg">🧐 Seems cannot contact server 🧐 <br/>retrying..</div>
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
+<!--
+<pre>{{this.gallerySvc?.media | json}}</pre>
+
+<div class="gallery gallery-margin">
+<ng-container *ngFor="let media of this.gallerySvc.media">
+  <a (click)="onImageClick(media)" >
+    <img class="imgLoaded" src="{{imgProviderService.getCachedImageUrl(media?.images?.m)}}" [title]="media?.name" [alt]="media?.name"/>
+  </a>
+</ng-container>
+</div>
+-->

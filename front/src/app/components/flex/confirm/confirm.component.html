@@ -1,0 +1,20 @@
+<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+
+      <!--Body-->
+      <div class="modal-body">
+        {{text}}
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a mdbBtn color="primary" class="waves-effect" mdbWavesEffect (click)="onOk()">{{okText}}</a>
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect data-dismiss="modal" (click)="onCancel()">{{cancelText}}</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

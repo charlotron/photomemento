@@ -1,0 +1,29 @@
+<!-- modal -->
+<app-confirm #reprocessConfirm (ok)="reprocessDir()"
+             [text]="'Are you sure you want to reprocess all files in this folder? (This will have high cpu&ram usage)'"></app-confirm>
+
+<!-- toolbar -->
+<div class="btn-toolbar refresh-buttons mb-2" role="toolbar" aria-label="Toolbar with button groups"
+     *ngIf="!dirProvSvc.activeIsRoot()">
+  <div class="btn-group" role="group" aria-label="Second group">
+    <button type="button" class="btn btn-default" title="reprocess this folder" (click)="reprocessConfirm.frame.show()">
+      <mdb-icon fas icon="cogs"></mdb-icon>
+    </button>
+  </div>
+</div>
+
+<!-- dirs -->
+<div class="dirs-container d-md-none" *ngIf="this.dirProvSvc.activeDirChilds && this.dirProvSvc.activeDirChilds.length">
+  <ng-container *ngFor="let child of this.dirProvSvc.activeDirChilds">
+    <div class="dir">
+      <a
+        [routerLink]="'/dirs/'+child.id"
+        [title]="child.name"
+        target="_self">
+        <em class="fas fa-folder"></em> {{child.name}}
+      </a>
+    </div>
+  </ng-container>
+</div>
+
+<app-gallery></app-gallery>

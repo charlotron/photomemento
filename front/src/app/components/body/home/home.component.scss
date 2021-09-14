@@ -1,0 +1,29 @@
+.fab-bottom-right {
+  position: fixed;
+  left: auto;
+  bottom: 5%;
+  right: 10%;
+}
+
+.search-filter-container {
+  font-size: small;
+  padding: 5px;
+  cursor:pointer;
+  text-align: right;
+}
+
+.search-filter-container .search-term {
+  font-weight: 500;
+  border: 1px solid #cccccc;
+  padding: 3px 5px;
+  border-radius: 4px;
+  background: #f0f0f0;
+  color: #9f9c9c;
+  font-size: 12px;
+}
+
+.search-filter-container .search-term:hover {
+  background: #e5e5e5;
+  color: #6b6b6b;
+}
+

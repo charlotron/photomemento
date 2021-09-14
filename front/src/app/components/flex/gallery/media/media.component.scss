@@ -1,0 +1,184 @@
+//UPPER NAVIGATION
+.preview-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1060;
+  padding: 11px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #0000002e;
+}
+
+.preview-nav:hover {
+  background: #0000007a;
+}
+
+.preview-nav a {
+  color: #e0e0e0;
+}
+
+.preview-nav .fas {
+  padding: 10px;
+  font-size: 23px;
+}
+
+.preview-nav .fill {
+  margin-right: auto;
+}
+
+.preview-nav .media-name{
+  text-shadow: 0 0 15px black;
+  color: white;
+}
+
+.preview-nav .changeQualityButton.active {
+  color: #74a8ff !important;
+}
+
+//NEXT/PREVIOUS PHOTO
+.lat-nav {
+  position: fixed;
+  top: 65px;
+  display: flex;
+  height: calc(100% - 65px - 70px);
+  width: 25%;
+  z-index: 800;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+/*
+.VIDEO .lat-nav{
+  height: calc(100% - 70px - 65px);
+}
+ */
+
+.lat-nav:hover {
+  //background-color: #ffffff2e;
+}
+
+.lat-nav:hover em {
+  opacity: 1;
+  background-color: #ffffff6e;
+  border-radius: 26px;
+  box-shadow: 0 0 34px 10px #0000009e;
+}
+
+.lat-nav em:hover {
+  opacity: 1;
+  background-color: #e0e0e0;
+  color: #767676;
+}
+
+.lat-nav:hover em.fa-angle-left {
+  padding: 5px 13px 5px 11px;
+}
+
+.lat-nav em {
+  color: white;
+}
+
+.lat-nav:hover em.fa-angle-right {
+  padding: 5px 11px 5px 12px;
+}
+
+.lat-nav em {
+  opacity: 0;
+}
+
+.lat-nav.prev {
+  left: 0;
+}
+
+.lat-nav.next {
+  left: calc(75%);
+}
+
+//SLIDESHOW
+.slideshow {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  left: 0;
+  padding: 5px;
+  background-color: #00000042;
+}
+
+.slideshow .fas {
+  font-size: 35px;
+  margin: 4px;
+  opacity: 0.6;
+  color: white;
+}
+
+.slideshow .fas:hover {
+  opacity: 1;
+}
+
+.countdown {
+  font-family: monospace;
+  text-align: center;
+  font-weight: bold;
+  opacity: 0.5;
+  font-size: 20px;
+  vertical-align: super;
+  margin: 0 9px;
+}
+
+// IMAGE RELATED
+
+.preview-container {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1050;
+  background-color: black;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.fill-max-width-height {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fill-max-width-height img, .fill-max-width-height .vid {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.vid {
+  position: relative;
+}
+
+.vid .vid-hover {
+  display: flex;
+  content: " ";
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: absolute;
+  opacity: 0.3;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.vid:hover .vid-hover {
+  display: none;
+}
+
+.vid mdb-icon {
+  font-size: 100px;
+}

@@ -1,0 +1,6 @@
+<!--<button mdbBtn color="primary" class="waves-light test" (click)="testEvent()">Test event</button>-->
+<div class="messages-container">
+  <ng-container *ngFor="let message of messages;let i=index">
+    <app-message [index]="i" [message]="message" (finished)="onMessageFinished(message)"></app-message>
+  </ng-container>
+</div>

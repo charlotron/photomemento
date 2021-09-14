@@ -1,0 +1,49 @@
+<!-- Links -->
+<ul class="navbar-nav mr-auto">
+  <ng-container *ngFor="let section of this.sectionsServiceService.sections">
+    <li class="nav-item" [ngClass]="section?.data?.classes">
+      <a
+        [routerLink]="section?.path+(section?.data?.defaultChild?'/'+section.data.defaultChild:'')"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link waves-light"
+        mdbWavesEffect
+        [ngClass]="{'active':section==this.sectionsServiceService.activeSection}"
+        (click)="navbar && navbar.toggle()">
+        <em class="fas fa-{{section?.data?.icon}}"></em> {{section?.data?.aliases?.normal}}
+      </a>
+      <app-sublink
+        class="sublink-container"
+        *ngIf="section.data.subsections"
+        [subsections]="section.data.subsections"
+        [depth]="0"
+        [navbar]="navbar"></app-sublink>
+    </li>
+  </ng-container>
+
+  <!--
+  <li class="nav-item active">
+    <a class="nav-link waves-light" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link waves-light" mdbWavesEffect>Features</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link waves-light" mdbWavesEffect>Pricing</a>
+  </li>
+
+  <!- - Dropdown - ->
+  <li class="nav-item dropdown" dropdown>
+    <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+      Basic dropdown<span class="caret"></span></a>
+    <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+      <a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>
+      <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
+      <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
+      <div class="divider dropdown-divider"></div>
+      <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
+    </div>
+  </li>
+  -->
+</ul>
+<!-- Links -->

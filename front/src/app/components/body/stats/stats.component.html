@@ -1,0 +1,136 @@
+<div class="m-3">
+  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group" role="group" aria-label="Second group">
+      <button type="button" class="btn btn-default" (click)="onCheckStatsClick()">
+        <mdb-icon fas icon="sync" *ngIf="!autoRefreshChecked"></mdb-icon>
+        <div class="spinner-border" role="status" *ngIf="autoRefreshChecked"></div>
+        <span class="refresh-interval-countdown" *ngIf="autoRefreshChecked">{{this.refreshIntervalCountDown}}</span>
+      </button>
+      <button type="button" class="btn btn-default button-auto" (click)="autoRefreshToggleChange($event)">
+      <span class="auto-txt">
+        <mdb-icon far icon="square" *ngIf="!autoRefreshChecked"></mdb-icon>
+        <mdb-icon far icon="check-square" *ngIf="autoRefreshChecked"></mdb-icon>
+        auto 5s
+      </span>
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="this.stats">
+    <!------ SYSTEM INFO -------->
+    <h5 class="mb-2">System Stats</h5>
+    <table class="table table-striped">
+      <caption class="d-none">This table show system stats</caption>
+      <tbody>
+      <tr>
+        <th scope="row">Uptime</th>
+        <td class="text-right" [title]="'Started on: '+this.stats?.times?.startTime">{{this.stats?.times?.upTime}}
+          <mdb-icon fas icon="info-circle"></mdb-icon>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Max Available Memory</th>
+        <td class="text-right">{{this.stats?.system?.maxDisplayMemory}} </td>
+      </tr>
+      <tr>
+        <th scope="row">Total Available Memory</th>
+        <td class="text-right">{{this.stats?.system?.totalDisplayMemory}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Used Memory</th>
+        <td class="text-right">{{this.stats?.system?.usedDisplayMemory}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Free Memory</th>
+        <td class="text-right">{{this.stats?.system?.freeDisplayMemory}}</td>
+      </tr>
+      <tr>
+        <th scope="row">This process cpu usage (%)</th>
+        <td>
+          <div class="progress">
+            <div class="progress-label-container"><span>{{this.stats?.system?.processCpu}}%</span></div>
+            <div
+              class="progress-bar"
+              role="progressbar" [attr.aria-valuenow]="this.stats?.system?.processCpu||0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{width:(this.stats?.system?.processCpu||0)+'%'}"
+              [ngClass]="{'warn':(this.stats?.system?.systemCpu||0)>50,'crit':(this.stats?.system?.systemCpu||0)>80}"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Overall system cpu usage (%)</th>
+        <td>
+          <div class="progress">
+            <div class="progress-label-container"><span>{{this.stats?.system?.systemCpu}}%</span></div>
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [attr.aria-valuenow]="this.stats?.system?.systemCpu||0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{width:(this.stats?.system?.systemCpu||0)+'%'}"
+              [ngClass]="{'warn':(this.stats?.system?.systemCpu||0)>50,'crit':(this.stats?.system?.systemCpu||0)>80}"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Threads</th>
+        <td class="text-right">{{this.stats?.threads?.totalActiveThreads}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!------ QUEUES -------->
+    <!-- TODO: Pending a way to pause and go on all processes
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="Second group">
+        <button type="button" class="btn btn-default" (click)="onProcessorsPlay()" title="Play all processes">
+          <mdb-icon fas icon="play"></mdb-icon>
+        </button>
+        <button type="button" class="btn btn-default" (click)="onProcessorsStop()" title="Pause all processes">
+          <mdb-icon fas icon="pause"></mdb-icon>
+        </button>
+      </div>
+    </div>
+    <h5 class="mb-2 overlap-toolbar">Queues</h5>
+    -->
+
+    <h5 class="mb-2">Queues</h5>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <caption class="d-none">This table show queue stats</caption>
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col" colspan="2" class="text-center">Elements <br/>Detected / Active</th>
+          <th scope="col" colspan="2" class="text-center">Processed<br/>OK / Error</th>
+          <th scope="col" colspan="2" class="text-center"> Workers<br/>Act / Max</th>
+          <th scope="col" class="text-center">Last processed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let entry of this.stats?.queues | keyvalue">
+          <td>{{entry.key}}</td>
+          <td class="text-right bl2-1">{{entry.value.elsDetected}}</td>
+          <td class="text-right bl-1">{{entry.value.elsWaitingProcess}}</td>
+          <td class="text-right bl2-1">{{entry.value.elsProcessedOk}}</td>
+          <td class="text-right bl-1">{{entry.value.elsProcessedError}}</td>
+          <td class="text-right bl2-1">{{entry.value.threadsRunning}}</td>
+          <td class="text-right bl-1">{{entry.value.threadsMax}}</td>
+          <td class="text-center bl2-1"><small>{{entry.value.elsProcessedLastId}}</small></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!------ THREADS -------->
+    <h5 class="border-bottom mb-2">Threads</h5>
+    <a (click)="toggleShowStackTrace()"><span *ngIf="showStackTraceSummary"><mdb-icon fas
+                                                                                      icon="minus-square"></mdb-icon> Hide</span><span
+      *ngIf="!showStackTraceSummary"><mdb-icon fas icon="plus-square"></mdb-icon> Show</span> stack trace summary</a>
+    <pre
+      *ngIf="showStackTraceSummary && this.stats?.threads?.stackTraceSummary">{{this.stats?.threads.stackTraceSummary | json}}</pre>
+  </ng-container>
+</div>

@@ -1,0 +1,18 @@
+<ul class="subsections d-none d-md-block" [ngClass]="'depth-'+depth">
+  <li *ngFor="let subsection of subsections; let i = index" class="caret"
+      [ngClass]="{'caret-middle':i<(subsections.length-1),'caret-last':i==(subsections.length-1)}">
+    <!--    <pre>{{subsection|json}}</pre>-->
+    <a
+      class="subsection-link"
+      [routerLink]="subsection.path"
+      [queryParams]="subsection?.queryParams"
+      *ngIf="!subsection.active"
+      [title]="subsection.text"
+      target="_self"
+      (click)="navbar && navbar.toggle()">{{subsection.text}}</a>
+    <span class="childs-tree" *ngIf="subsection.subsections"></span>
+    <span class="subsection-active" *ngIf="subsection.active" [title]="subsection.text">{{subsection.text}}</span>
+
+    <app-sublink *ngIf="subsection.subsections" [subsections]="subsection.subsections" [depth]="depth+1"></app-sublink>
+  </li>
+</ul>

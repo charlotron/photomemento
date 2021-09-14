@@ -1,0 +1,51 @@
+html, body, app-root, .app-frame {
+  margin: 0;
+  height: 100%;
+  box-sizing: border-box;
+  //color: #e0e0e0;
+  color: #877f7f;
+  //width: calc(100% - 15px);
+}
+
+.sidebar-and-body-container {
+  margin-top: 57px;
+}
+
+.body-container {
+  margin-top: 60px;
+  display: block;
+  overflow-y: auto;
+}
+
+.sidebar-container {
+  height: calc(100% - 57px);
+  position: fixed;
+  top: 57px;
+  left: 0;
+  background-color: white;
+  box-shadow: inset 2px 0px 15px 9px whitesmoke;
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .body-container {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .sidebar-container {
+    width: 200px;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .body-container {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+  }
+  .sidebar-container {
+    width: 250px;
+  }
+}

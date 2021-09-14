@@ -1,0 +1,17 @@
+favicon:
+  ico:
+version: '3.1'
+
+services:
+
+  photo-memento-front-test:
+    build: .
+    container_name: photo-memento-front-test
+    restart: unless-stopped
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    ports:
+      - "8090:80"
+    environment:
+      TZ: "${TZ}"
+      NG_BACKEND_BASE_URL: "http://localhost"

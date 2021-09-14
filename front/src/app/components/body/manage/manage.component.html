@@ -1,0 +1,45 @@
+<div class="m-3">
+  <h5 class="border-bottom mb-2">Available actions for management</h5>
+  <div class="d-flex flex-column p-2 p-b-4">
+    <div class="action d-flex flex-row justify-content-between">
+      <div>
+        <label class="mr-auto"><strong>Scans all files/folders</strong></label>
+        <ul>
+          <li>Forces detection for all files & folders</li>
+          <li>If a file has pending processes puts file in queue<br/>(generates thumbnails, geodata resolve, etc..)</li>
+        </ul>
+      </div>
+      <div class="justify-content-start">
+        <button type="button" class="btn btn-primary btn-sm" (click)="onRecheckFiles()">Scan all</button>
+      </div>
+    </div>
+
+    <div class="action d-flex flex-row justify-content-between">
+      <div>
+        <label class="mr-auto"><strong>Full reprocess</strong>&nbsp;<small class="caution">Care, huge cpu/ram usage!</small></label>
+        <ul>
+          <li>Forces detection for all files & folders</li>
+          <li>Every file is reprocessed again</li>
+        </ul>
+      </div>
+      <div class="d-flex flex-column justify-content-between">
+        <button type="button" class="btn btn-primary btn-sm" (click)="onReprocessFiles()">Reprocess all</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="onReprocessFiles(constants.FILE_TYPE_PHOTO)">Reprocess images</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="onReprocessFiles(constants.FILE_TYPE_VIDEO)">Reprocess videos</button>
+      </div>
+    </div>
+
+    <div class="action d-flex flex-row justify-content-between">
+      <div>
+        <label class="mr-auto"><strong>Check files integrity</strong></label>
+        <ul>
+          <li>Forces detection for all files & folders</li>
+          <li>Every file is reprocessed again</li>
+        </ul>
+      </div>
+      <div class="justify-content-start">
+        <button type="button" class="btn btn-primary btn-sm" (click)="onCheckIntegrity()">Check integrity</button>
+      </div>
+    </div>
+  </div>
+</div>

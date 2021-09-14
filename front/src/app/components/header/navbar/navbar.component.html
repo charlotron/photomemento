@@ -1,0 +1,36 @@
+<!--Navbar-->
+<mdb-navbar #navbar SideClass="navbar fixed-top navbar-expand-lg navbar-light">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand><a class="navbar-brand" (click)="navbar.toggle()"><small><em class="fas fa-photo-video"></em><span class="d-md-none">PM</span> <span class="d-none d-md-inline-block">PhotoMemento</span></small></a></mdb-navbar-brand>
+
+  <div class="search-container">
+    <form #f (submit)="onSubmit($event,f)">
+      <input
+        #searchInput
+        name="q"
+        type="text"
+        [placeholder]="this.searchTerm ? 'Searching: '+this.searchTerm:''"
+        (mouseenter)="searchInput.placeholder=this.searchTerm ? 'Searching: '+this.searchTerm:'Search..'"
+        (mouseout)="searchInput.placeholder=this.searchTerm ? 'Searching: '+this.searchTerm:''"
+        (focus)="searchInput.placeholder=this.searchTerm ? 'Searching: '+this.searchTerm:''"
+        autocomplete="off"
+      />
+    </form>
+  </div>
+  <!-- Collapsible content -->
+  <links>
+    <!-- Links -->
+    <app-links class="d-md-none" [navbar]="navbar"></app-links>
+    <!-- Links -->
+  </links>
+  <!-- Collapsible content -->
+  <!-- Search form - ->
+  <form class="form-inline waves-light" mdbWavesEffect>
+    <div class="md-form my-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+    </div>
+  </form>
+  -->
+</mdb-navbar>
+<!--/.Navbar-->

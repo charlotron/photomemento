@@ -1,0 +1,29 @@
+.dirs-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 2px;
+}
+
+.dir-container {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.dir {
+  margin: 6px 10px;
+  flex-grow: 1;
+  flex-basis: 0;
+  white-space: nowrap;
+}
+
+
+.btn-group {
+  margin-top: -40px;
+}
+
+@media (min-width: 768px) {
+
+
+}

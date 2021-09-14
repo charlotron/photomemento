@@ -1,0 +1,42 @@
+# ======== COMPILE/BUILD ===============
+FROM node:10-alpine as front-build-step
+
+ARG APP_RELATIVE=app
+ARG DOCKER_APP_ROOT=/$APP_RELATIVE
+ARG DIST_ROOT=$DOCKER_APP_ROOT/dist
+ARG DIST_FRONT=$DIST_ROOT/front
+
+RUN mkdir -p $DOCKER_APP_ROOT
+WORKDIR $DOCKER_APP_ROOT
+
+COPY package.json $DOCKER_APP_ROOT
+
+RUN npm install
+
+COPY . $DOCKER_APP_ROOT
+RUN npm run build --prod
+
+# ======== PREPARE: DIST IMAGE ===============
+FROM nginx:1.17.1-alpine
+
+ARG APP_RELATIVE=app
+ARG DOCKER_APP_ROOT=/$APP_RELATIVE
+ARG APP_DOCKER=$DOCKER_APP_ROOT/docker
+ARG APP_HTMLS=$DOCKER_APP_ROOT/html
+ARG DIST_ROOT=$DOCKER_APP_ROOT/dist
+ARG DIST_FRONT=$DIST_ROOT/front
+ARG DOCKER_APP_NGINX_CONF_ROOT=$DOCKER_APP_ROOT/nginx
+ARG NGINX_CONF_PATH=/etc/nginx/conf.d
+
+RUN mkdir -p $APP_HTMLS
+
+WORKDIR $DOCKER_APP_ROOT
+
+COPY --from=front-build-step $DIST_FRONT $APP_HTMLS
+COPY --from=front-build-step $APP_DOCKER $DOCKER_APP_ROOT
+
+RUN mv $DOCKER_APP_NGINX_CONF_ROOT/* $NGINX_CONF_PATH
+RUN chmod 755 * -R
+
+#Configure and run
+ENTRYPOINT ["sh", "./init.sh"]

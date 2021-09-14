@@ -1,0 +1,56 @@
+ul.subsections {
+  padding-left: 2px;
+  list-style: none;
+  font-size: 12px;
+}
+
+ul,li{
+  position: relative;
+}
+
+li {
+  text-overflow: ellipsis;
+  /*overflow: hidden;*/
+  white-space: nowrap;
+}
+
+.caret {
+  user-select: none; /* Prevent text selection */
+}
+
+li::before, li::after,li>.childs-tree {
+  content: "";
+  position: absolute;
+  left: -8px;
+}
+
+li::before {
+  border-top: 1px solid #dedede;
+  top: 9px;
+  width: 6px;
+  height: 0;
+}
+
+ul:not(.depth-0) > li::after {
+  border-left: 1px solid #dedede;
+  height: 100%;
+  width: 0;
+  top: 2px;
+}
+
+li>.childs-tree{
+  border-left: 1px solid #dedede;
+  height: 10px;
+  width: 0;
+  top: 10px;
+  left: -6px;
+}
+
+ul > li:last-child::after {
+  height: 8px;
+}
+
+.subsection-active {
+  font-weight: 500;
+  color: #757575;
+}
